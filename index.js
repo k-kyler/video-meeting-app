@@ -2,10 +2,9 @@
 // IMPORT LIBRARIES
 // ----------------
 const express = require("express");
-const { v4: v4 } = require("uuid");
+const { v4: v4UniqueId } = require("uuid");
 const http = require("http");
 const { ExpressPeerServer } = require("peer");
-
 const app = express();
 const port = process.env.PORT || 7000;
 const httpServer = http.Server(app);
@@ -13,6 +12,7 @@ const io = require("socket.io")(httpServer);
 const peerServer = ExpressPeerServer(httpServer, {
     debug: true,
 });
+
 app.set("view engine", "pug");
 app.use(express.static("public"));
 app.use("/peerjs", peerServer);
@@ -79,8 +79,8 @@ app.post("/login", (req, res) => {
 
     // CHECK USER FROM DATABASE: 
     //    IF USER VALID:
-    //        --> res.redirect(`/meetingroom/${v4()}`);
-    res.redirect(`/meetingroom/${v4()}`);
+    //        --> res.redirect(`/meetingroom/${v4UniqueId()}`);
+    res.redirect(`/meetingroom/${v4UniqueId()}`);
     // ------------------
     // END HANDLE LOGIN
     // ------------------
