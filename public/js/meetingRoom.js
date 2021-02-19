@@ -1,0 +1,96 @@
+// -------------------------- Websocket & WebRTC setup --------------------------
+
+// Import socket.io for client
+const socket = io("/");
+
+// Setup peer for client
+let peer = new Peer(undefined, {
+    path: "/peerjs",
+    host: "/",
+    port: "7000",
+});
+
+peer.on("open", (userId) => {
+    // Emitting to server when user entry the room
+    socket.emit("entry room", meetingRoomId, userId);
+});
+
+// ---------------------------- Streaming video setup ----------------------------
+
+// Add streaming video function
+const addStreamingVideo = (video, stream) => {
+    video.srcObject = stream;
+    video.addEventListener("loadedmetadata", () => {
+        video.play();
+    });
+    document.getElementById("videoContainer").append(video);
+};
+
+// ------------------- Self user --------------------
+let selfStream;
+let selfVideo = document.createElement("video");
+
+selfVideo.muted = true; // remove after finish project
+
+// ------------------- Other user -------------------
+const newUserEntried = (userId, stream) => {
+    console.log(`User ${userId} has entried the room`); // remove after finish project
+
+    let peerCall = peer.call(userId, stream);
+    let otherUserVideo = document.getElementById("videoContainer");
+
+    peerCall.on("stream", (otherUserStream) => {
+        addStreamingVideo(otherUserVideo, otherUserStream);
+    });
+};
+
+// ----------- Self user and other user display streaming video and audio setup -----------
+
+// Prompt a permission for asking to use their micro and camera (media input),
+// it will also generate a media stream which is use to track what types of media
+// are using by users such as a video track produced by camera
+navigator.mediaDevices
+    .getUserMedia({
+        video: false,
+        audio: true,
+    })
+    .then((stream) => {
+        // Self user
+        selfStream = stream;
+        addStreamingVideo(selfVideo, stream);
+
+        // Other user listen to the emitting message from server and also make a call
+        socket.on("new user has connected", (userId) => {
+            newUserEntried(userId, stream);
+        });
+
+        // All users will answer the call to see the other user's video in the room
+        peer.on("call", (call) => {
+            let video = document.createElement("video");
+
+            call.answer(stream);
+            call.on("stream", (userStream) => {
+                addStreamingVideo(video, userStream);
+            });
+        });
+    });
+
+// ------------------------- Client message type in handler -------------------------
+
+let inputMessage = document.getElementById("inputMessage");
+
+// Get the input message when user type enter and emit to server
+inputMessage.addEventListener("keydown", (event) => {
+    if (inputMessage.value !== "" && event.keyCode === 13) {
+        socket.emit("new message", inputMessage.value);
+        inputMessage.value = "";
+    }
+});
+
+// Client listen to the emitting message from server to add new message on the web page
+socket.on("add new message", (newMessage) => {
+    let messageElement = document.createElement("li");
+
+    messageElement.innerHTML = newMessage;
+    document.getElementById("chatMessages").append(messageElement);
+});
