@@ -3,6 +3,7 @@
 }
 
 video {
+    background-color: blue;
     object-fit: cover;
     height: 12rem;
     width: 18rem;

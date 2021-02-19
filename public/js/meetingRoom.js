@@ -7,7 +7,7 @@ const socket = io("/");
 let peer = new Peer(undefined, {
     path: "/peerjs",
     host: "/",
-    port: "443",
+    port: "7000",
 });
 
 peer.on("open", (userId) => {
@@ -53,7 +53,7 @@ const newUserEntried = (userId, stream) => {
 // are using by users such as a video track produced by camera
 navigator.mediaDevices
     .getUserMedia({
-        video: true,
+        video: false,
         audio: true,
     })
     .then((stream) => {
