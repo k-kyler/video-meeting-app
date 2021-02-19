@@ -10,10 +10,40 @@ const io = require("socket.io")(httpServer);
 const peerServer = ExpressPeerServer(httpServer, {
     debug: true,
 });
-
+var path = require('path');
+var bodyParser = require('body-parser');
 app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
 app.use("/peerjs", peerServer);
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
+
+
+app.get('/', (req, res, next) => {
+    res.render('index')
+})
+app.get('/login', (req, res, next) => {
+    res.render('login')
+})
+
+app.post('/login', (req, res, next) => {
+    var username = req.body.username
+    var password = req.body.password
+
+    console.log(username, password)
+})
+
+
+app.get('/signup', (req, res, next) => {
+    res.render('signup')
+})
+app.post('/signup', (req, res, next) => {
+    res.render('signup')
+})
+
 
 // Server listen to the emitting messages from client to take on action
 io.on("connection", (socket) => {
