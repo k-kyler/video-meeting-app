@@ -9,18 +9,19 @@ block meetingroom
                     div(class="meetingroom__controller d-flex align-items-center justify-content-between")
                         p(class="mb-0 text-light meetingroom__username") Quang Khai
                         div(class="meetingroom__buttons d-flex justify-content-center align-items-center")
-                            div(class="meetingroom__button d-flex align-items-center flex-column") 
-                                i(class="text-light fas fa-microphone")
+                            div(id="audioButton", class="meetingroom__button mr-5 d-flex align-items-center flex-column") 
+                                i(class="text-light fas fa-volume-up", id="audioIcon")
                                 p(class="mb-0 text-light") Audio
-                            div(class="meetingroom__button d-flex align-items-center flex-column")
+                            div(id="videoButton", class="meetingroom__button mr-5 d-flex align-items-center flex-column")
+                                i(class="text-light fas fa-video", id="videoIcon")
+                                p(class="mb-0 text-light") Video
+                            div(id="leaveButton", class="meetingroom__button d-flex align-items-center flex-column")
                                 i(class="text-light fas fa-power-off")
                                 p(class="mb-0 text-light") Leave
-                            div(class="meetingroom__button d-flex align-items-center flex-column")
-                                i(class="text-light fas fa-video")
-                                p(class="mb-0 text-light") Video
+                            
             div(class="meetingroom__chat col-md-3 px-3 py-3 d-flex flex-column align-items-center")
                 h4(class="meetingroom__chatTitle mb-4") Message here! 
-                div(class="meetingroom__chatBox w-100")
+                div(class="meetingroom__chatBox w-100", id="chatBox")
                     ul(class="meetingroom__chatMessages", id="chatMessages")
-                div(class="meetingroom__chatInputMessage w-100")
+                div(class="meetingroom__chatInputMessage w-100 mt-4")
                     input(type="text", class="form-control", id="inputMessage", placeholder="Write something...")
