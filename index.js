@@ -12,6 +12,9 @@ const peerServer = ExpressPeerServer(httpServer, {
 });
 var path = require('path');
 var bodyParser = require('body-parser');
+var AccountModel = require('./models/account')
+
+
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
@@ -34,15 +37,57 @@ app.post('/login', (req, res, next) => {
     var username = req.body.username
     var password = req.body.password
 
-    console.log(username, password)
+    AccountModel.findOne({
+            username: username,
+            password: password
+        })
+        .then(data => {
+            if (data) {
+                res.json('Dang nhap thanh cong')
+                res.render("mettingRoom")
+            } else {
+                res.status(400).json('Dang nhap that bai')
+            }
+        })
+        .catch(err => {
+            res.status(500).json('Loi server')
+        })
+        /* res.redirect(`/meetingroom/${v4UniqueId()}`); */
 })
+
+app.get("/meetingroom/:id", (req, res) => {
+    res.render("meetingRoom", {
+        meetingRoomId: req.params.id,
+    });
+});
 
 
 app.get('/signup', (req, res, next) => {
     res.render('signup')
 })
 app.post('/signup', (req, res, next) => {
-    res.render('signup')
+    var username = req.body.username
+    var password = req.body.password
+
+    AccountModel.findOne({
+            username: username
+        })
+        .then(data => {
+            if (data) {
+                res.json('User nay da ton tai')
+            } else {
+                return AccountModel.create({
+                    username: username,
+                    password: password
+                })
+            }
+        })
+        .then(data => {
+            res.json('Tao tai khoan thanh cong')
+        })
+        .catch(err => {
+            res.status(500).json('Tao tai khoan that bai')
+        })
 })
 
 
