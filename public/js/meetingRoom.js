@@ -31,7 +31,7 @@ const addStreamingVideo = (video, stream) => {
 let selfStream;
 let selfVideo = document.createElement("video");
 
-selfVideo.muted = true; // Set mute to self video
+// selfVideo.muted = true; // Set mute to self video
 
 // ------------------- Other user -------------------
 
