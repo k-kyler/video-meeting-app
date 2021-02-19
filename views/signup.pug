@@ -1,0 +1,27 @@
+extends layout
+
+block content 
+    .background.container
+      .hh
+        img.rounded.mx-auto.d-block.logo(src='/img/pic1.png')
+      .container
+        .row.justify-content-center
+          .col-md-5
+            h4.text-danger.text-center
+              b SIGN UP
+            form(action='/signup' method='POST')
+              .form-group
+                label Email:
+                input#email.form-control(type='email' name='email' required)
+              .form-group
+                label Password:
+                input#pass.form-control(type='password' name='pass' required)
+              .form-group
+                label Confirm Password:
+                input#pass.form-control(type='password' name='confirmpass' required)
+              .form-group
+                button.btn.btn-dark.loginBtn Signup
+                a.btn.btn-dark(href='/login') Back
+
+
+

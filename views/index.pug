@@ -1,0 +1,142 @@
+extends layout
+
+block content 
+    div
+      .first-eye
+        .p-absolute(style='width: 100%; background-color: #00000024')
+        // Header
+        .p-absolute.container-w.z-index-h.l-header
+          .l-logo
+            a.navbar-brand(href='#')
+              img#logo(style='width: 50px; height: 50px;' src='/img/pic1.png')
+          .header-btn
+            .d-flex.header-btn-nor
+              div
+                a.nav-link(style='color: white' href='#')
+                  b Home
+            div
+              // Login
+              a(href='/login')
+                button.btn(style='\
+                    background-color: #558F3B;\
+                    color: white;\
+                    border-color: green;\
+                    border-width: 3px;\
+                    margin: 0 10px 0 10px;\
+                  ' type='submit')
+                  | Login
+      #signinMessage
+      // Detail
+      .detail.centroid
+        .container-w.centroid
+          .l-intro
+            .card
+              p
+              h4 KKD VideoCallApp
+              span.card-text.fontSize24
+                | Is an online video call application. Founded by a group of 3 students of IT Faculty - Ton Duc Thang University...
+              p
+              a.btn.btn-success.colorSeeDetail.centroid(href='') See details
+            .video.centroid
+              iframe(src='https://www.youtube.com/embed/wkP_8vwhPtM')
+      // Benefit
+      .container
+        p.spaceRow
+        .row
+          .col-lg-6.col-md-6.col-sm-6.col-xs-4.col-12
+            img.BenifitPicture(src='/img/benifit1.png')
+          .col-lg-6.col-md-6.col-sm-6.col-xs-4.col-12.infoBenifit
+            h4 Convenient, fast
+            span.card-text.fontSize20 The processing speed is very fast, the application can be used anytime, anywhere 
+        p.spaceRow
+        .row
+          .col-lg-6.col-md-6.col-sm-6.col-xs-4.col-12.infoBenifit
+            h4 Friendly interface
+            span.card-text.fontSize20 Easily create meetings, invite others to the meeting.
+          .col-lg-6.col-md-6.col-sm-6.col-xs-4.col-12
+            img.BenifitPicture(src='/img/benifit2.png')
+        p.spaceRow
+        .row
+          .col-lg-6.col-md-6.col-sm-6.col-xs-4.col-12
+            img.BenifitPicture(src='/img/benifit3.png')
+          .col-lg-6.col-md-6.col-sm-6.col-xs-4.col-12.infoBenifit
+            h4 Absolute security 
+            span.card-text.fontSize20 User information data and meetings are safe and secure.
+        p.spaceRow
+      // Statistics
+      .statisticTab(style='height: 100%')
+        .container
+          .row
+            // Box1
+            .col-lg-4.col-md-4.col-sm-4.col-xs-12.col-12
+              .card.WidthHeight9070Percent(style='margin-top: 50px')
+                .card-body
+                  p.staticsInfo ∞
+                  p.fontSize35 AGES
+            // Box2
+            .col-lg-4.col-md-4.col-sm-4.col-xs-12.col-12
+              .card.WidthHeight9070Percent(style='margin-top: 50px')
+                .card-body
+                  p.staticsInfo > 8M
+                  p.fontSize35 USERS NUMBER
+            // Box3
+            .col-lg-4.col-md-4.col-sm-4.col-xs-12.col-12
+              .card.WidthHeight9070Percent(style='margin-top: 50px')
+                .card-body
+                  p.staticsInfo ∞
+                  p.fontSize35 VIDEO CALL TIME
+      // Customer Comments
+      .container
+        p.commentHeader Comments
+        .row
+          .col-lg-2.col-md-3.col-11
+            img.customerAvatar(src='/img/ava1.png')
+          .col-lg-10.col-md-9.col-11.infoCustomerComment
+            h4 Nguyen Ngoc Thao , age 24 
+            span.card-text.fontSize20 From now on, I no longer have to worry about watching lessons in class during this covid-19 translation season
+        p.spaceRow
+        .row
+          .col-lg-2.col-md-3.col-11
+            img.customerAvatar(src='/img/ava2.png')
+          .col-lg-10.col-md-9.col-11.infoCustomerComment
+            h4 Vo Hoang Anh , age 20 
+            span.card-text.fontSize20 The application is very easy to use. The interface is quite nice.
+        p.spaceRow
+        .row
+          .col-lg-2.col-md-3.col-11
+            img.customerAvatar(src='/img/ava3.png')
+          .col-lg-10.col-md-9.col-11.infoCustomerComment
+            h4 Tran Cong Dang , age 32 
+            span.card-text.fontSize20 At this age, I always forget my head and forget the tail. From now on, the online presentation via video helps me prepare more carefully, helping me be more successful at work
+        // More Comments
+        .row
+          .col-lg-2.col-md-3.col-11
+          .col-lg-10.col-md-9.col-11.infoCustomerComment
+            a.commentMore(href='#') More comments>>
+        p.spaceRow
+      // Footer
+      #footer.centroid
+        .container-w
+          .row
+            // Map Picture
+            img.flex.map(src='/img/map.png' width='400' heigh='400')
+            // Info Footer
+            .infoFooter
+              h Software Development Team - KKD VideoCallApp
+              br
+              h 19 Nguyen Huu Tho, Tan Phong, District 7, HCM City
+              br
+              h Hotline: (+84) 0987654321
+              br
+              h Email: kkd_support@gmail.com
+              br
+              h Copyright © 2021 by kkdvideocallapp.vn
+              br
+              // Some Other Media
+              img.twitterLogo(src='/img/twitterLogo.png' width='100')
+              img(src='/img/facebookLogo.png' width='60')
+              img(src='/img/instagramLogo.png' width='55')
+          .productFooter
+            p
+              img(src='https://kichi.ggg.com.vn/wp-content/uploads/2018/10/bct.png')
+            p Producted by KKD Software Team.
