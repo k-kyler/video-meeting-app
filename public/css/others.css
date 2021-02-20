@@ -212,6 +212,7 @@ div {
         justify-content: center;
     }
 }
+
 .bodyOpt {
     background-image: url("/img/bgOptions.jpg");
     background-size: 100%;
@@ -240,3 +241,5 @@ div {
     font-weight: bold;
     text-align: center;
 }
+
+

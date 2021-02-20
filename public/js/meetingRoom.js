@@ -12,7 +12,7 @@ let peer = new Peer(undefined, {
 
 peer.on("open", (userId) => {
     // Emitting to server when user entry the room
-    socket.emit("entry room", meetingRoomId, userId);
+    socket.emit("Entry room", meetingRoomId, userId);
 });
 
 // ---------------------------- Streaming video setup ----------------------------
@@ -27,17 +27,19 @@ const addStreamingVideo = (video, stream) => {
 };
 
 // ------------------- Self user --------------------
+
 let selfStream;
 let selfVideo = document.createElement("video");
 
-selfVideo.muted = true; // remove after finish project
+selfVideo.muted = true; // Set mute to self video
 
 // ------------------- Other user -------------------
+
 const newUserEntried = (userId, stream) => {
     console.log(`User ${userId} has entried the room`); // remove after finish project
 
     let peerCall = peer.call(userId, stream);
-    let otherUserVideo = document.getElementById("videoContainer");
+    let otherUserVideo = document.createElement("video");
 
     peerCall.on("stream", (otherUserStream) => {
         addStreamingVideo(otherUserVideo, otherUserStream);
@@ -51,7 +53,7 @@ const newUserEntried = (userId, stream) => {
 // are using by users such as a video track produced by camera
 navigator.mediaDevices
     .getUserMedia({
-        video: false,
+        video: true,
         audio: true,
     })
     .then((stream) => {
@@ -60,7 +62,7 @@ navigator.mediaDevices
         addStreamingVideo(selfVideo, stream);
 
         // Other user listen to the emitting message from server and also make a call
-        socket.on("new user has connected", (userId) => {
+        socket.on("New user has connected", (userId) => {
             newUserEntried(userId, stream);
         });
 
@@ -82,15 +84,54 @@ let inputMessage = document.getElementById("inputMessage");
 // Get the input message when user type enter and emit to server
 inputMessage.addEventListener("keydown", (event) => {
     if (inputMessage.value !== "" && event.keyCode === 13) {
-        socket.emit("new message", inputMessage.value);
+        socket.emit("New message", inputMessage.value);
         inputMessage.value = "";
     }
 });
 
 // Client listen to the emitting message from server to add new message on the web page
-socket.on("add new message", (newMessage) => {
+socket.on("Add new message", (newMessage) => {
     let messageElement = document.createElement("li");
 
     messageElement.innerHTML = newMessage;
     document.getElementById("chatMessages").append(messageElement);
+    document.getElementById("chatBox").scrollTop = document.getElementById(
+        "chatBox"
+    ).scrollHeight;
+});
+
+// --------------------------------- Audio handler ---------------------------------
+
+document.getElementById("audioButton").addEventListener("click", () => {
+    // Mute audio
+    if (selfStream.getAudioTracks()[0].enabled === true) {
+        selfStream.getAudioTracks()[0].enabled = false;
+        document.getElementById("audioIcon").classList.remove("fa-volume-up");
+        document.getElementById("audioIcon").classList.add("fa-volume-mute");
+    }
+
+    // Unmute audio
+    else {
+        selfStream.getAudioTracks()[0].enabled = true;
+        document.getElementById("audioIcon").classList.remove("fa-volume-mute");
+        document.getElementById("audioIcon").classList.add("fa-volume-up");
+    }
+});
+
+// --------------------------------- Video handler ---------------------------------
+
+document.getElementById("videoButton").addEventListener("click", () => {
+    // Non-display video
+    if (selfStream.getVideoTracks()[0].enabled === true) {
+        selfStream.getVideoTracks()[0].enabled = false;
+        document.getElementById("videoIcon").classList.remove("fa-video");
+        document.getElementById("videoIcon").classList.add("fa-video-slash");
+    }
+
+    // Display video
+    else {
+        selfStream.getVideoTracks()[0].enabled = true;
+        document.getElementById("videoIcon").classList.remove("fa-video-slash");
+        document.getElementById("videoIcon").classList.add("fa-video");
+    }
 });
