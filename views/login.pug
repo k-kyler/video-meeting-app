@@ -1,0 +1,26 @@
+extends layout
+block meetingroom 
+    .background.container
+      .hh
+        img.rounded.mx-auto.d-block.logo(src='/img/pic1.png')
+      .container
+        .row.justify-content-center
+          .col-md-5
+            h4.text-danger.text-center
+              b VIDEO CALL APP
+            form(action='/login' method='POST')
+              .form-group
+                label Email:
+                input#email.form-control(type='email' name='username' required)
+              .form-group
+                label Password:
+                input#pass.form-control(type='password' name='password' required)
+              if error
+                h6(style="color: red") #{error}
+              .form-group
+                button.btn.btn-dark.loginBtn Login
+                h6 Have no account?
+                a(href='/signup') Signup now!
+
+
+

@@ -1,0 +1,29 @@
+extends layout
+
+block meetingroom 
+    .background.container
+      .hh
+        img.rounded.mx-auto.d-block.logo(src='/img/pic1.png')
+      .container
+        .row.justify-content-center
+          .col-md-5
+            h4.text-danger.text-center
+              b SIGN UP
+            form(action='/signup' method='POST')
+              .form-group
+                label Email:
+                input#email.form-control(type='email' name='username' required)
+              .form-group
+                label Password:
+                input#pass.form-control(type='password' name='password' required)
+              .form-group
+                label Confirm Password:
+                input#pass.form-control(type='password' name='confirmpassword' required)
+                if (error)
+                  h6(style="color: red") #{error}
+              .form-group
+                button.btn.btn-dark.loginBtn Signup
+                a.btn.btn-dark(href='/login') Back
+
+
+

@@ -1,23 +1,19 @@
 .meetingroom__videoContainer {
     height: 100vh;
 }
-
 video {
     background-color: blue;
     object-fit: cover;
     height: 12rem;
     width: 18rem;
 }
-
 .meetingroom__video,
 .meetingroom__chat {
     height: 100vh;
 }
-
 .meetingroom__video {
     background-color: black;
 }
-
 .meetingroom__controller {
     background-color: #262626;
     padding: 0.7rem 1rem;
@@ -26,27 +22,23 @@ video {
 .meetingroom__button {
     cursor: pointer;
 }
-
 .meetingroom__button > i {
     font-size: large;
 }
-
 .meetingroom__button:hover > i,
 .meetingroom__button:hover > p {
     transition: opacity 0.3s ease-in-out;
     opacity: 0.5;
 }
-
 .meetingroom__chat {
     background-color: #f1f2f5;
 }
-
 .meetingroom__chatBox {
     flex: 1;
     overflow-y: auto;
 }
-
 .meetingroom__chatMessages {
     padding-inline-start: 0;
     list-style-type: none;
 }
+
