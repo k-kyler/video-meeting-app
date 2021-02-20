@@ -10,126 +10,124 @@ const io = require("socket.io")(httpServer);
 const peerServer = ExpressPeerServer(httpServer, {
     debug: true,
 });
-const bcrypt = require('bcrypt');
-const { check, validationResult } = require('express-validator')
-const path = require('path');
-const session = require('express-session')
-const bodyParser = require('body-parser');
-const AccountModel = require('./models/account');
+const bcrypt = require("bcrypt");
+const { check, validationResult } = require("express-validator");
+const path = require("path");
+const session = require("express-session");
+const bodyParser = require("body-parser");
+const AccountModel = require("./models/account");
 const { urlencoded } = require("body-parser");
-
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
 app.use("/peerjs", peerServer);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(
+    session({
+        secret: "secretcat",
+        resave: false,
+        saveUninitialized: true,
+        cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    })
+);
 
-app.use(bodyParser.urlencoded({ extended: false }))
+// App endpoints
+app.get("/", (req, res) => {
+    res.render("index");
+});
 
-app.use(bodyParser.json())
-app.use(session({
-    secret: 'secretcat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }
-}))
+app.get("/login", (req, res) => {
+    res.render("login");
+});
 
-
-app.get('/home', (req, res) => {
-    if (req.session.username) {
-        res.render('index')
-    } else {
-        res.redirect('/login')
-    }
-})
-
-app.get('/login', (req, res) => {
-    res.render('login')
-})
-
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
     AccountModel.findOne({
-            username: req.body.username,
+        username: req.body.username,
+    })
+        .then((data) => {
+            bcrypt
+                .compare(req.body.password, data.password)
+                .then(function (result) {
+                    if (result) {
+                        req.session.username = req.body.username;
+                        res.redirect(`/meetingroom/${v4UniqueId()}`);
+                    } else {
+                        res.render("login", {
+                            error: "Invalid email or password",
+                        });
+                    }
+                });
         })
-        .then(data => {
-            bcrypt.compare(req.body.password, data.password).then(function(result) {
-                if (result) {
-                    req.session.username = req.body.username
-                    res.redirect(`/meetingroom/${v4UniqueId()}`);
-                } else {
-                    res.render('login', {
-                        error: 'Dang nhap that bai'
-                    })
-                }
-            })
-        })
-        .catch(err => {
-            res.json({
-                error: 'Loi server'
-            })
-        })
-})
+        .catch((err) => {
+            res.render("login", {
+                error: "Invalid email or password",
+            });
+        });
+});
 
+app.get("/signup", (req, res) => {
+    res.render("signup");
+});
+
+app.post("/signup", (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    var confirmpassword = req.body.confirmpassword;
+    let encryptedPassword = "";
+
+    if (confirmpassword != password) {
+        res.render("signup", {
+            error: "Confirm password does not match",
+        });
+    } else {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(password, salt, function (err, hash) {
+                encryptedPassword = hash;
+                AccountModel.findOne({
+                    username: username,
+                })
+                    .then((data) => {
+                        /* const passwordhash = bcrypt.hash(password, 10)
+                        const confirmpasswordhash = bcrypt.hash(confirmpassword, 10) */
+                        if (data) {
+                            res.render("signup", {
+                                error: "User has already existed",
+                            });
+                        } else {
+                            return AccountModel.create({
+                                username: username,
+                                password: encryptedPassword,
+                            });
+                        }
+                    })
+                    .catch((err) => {
+                        res.render("signup", {
+                            error: "User has already existed",
+                        });
+                    });
+            });
+        });
+    }
+});
+
+// Entry endpoint
+// When enter into this endpoint it will also generate a unique room id and redirect you to that room
+app.get("/create", (req, res) => {
+    res.redirect(`/meetingroom/${v4UniqueId()}`);
+});
+
+// Meeting room endpoint
 app.get("/meetingroom/:id", (req, res) => {
     if (req.session.username) {
         res.render("meetingRoom", {
             meetingRoomId: req.params.id,
         });
     } else {
-        res.redirect('/login')
+        res.redirect("/login");
     }
-
 });
-
-
-app.get('/signup', (req, res) => {
-    res.render('signup')
-})
-app.post('/signup', (req, res) => {
-    var username = req.body.username
-    var password = req.body.password
-    var confirmpassword = req.body.confirmpassword
-    let encryptedPassword = ''
-
-    if (confirmpassword != password) {
-        res.render('signup', {
-            error: 'Confirm password does not match'
-        })
-    } else {
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(password, salt, function(err, hash) {
-                encryptedPassword = hash
-                AccountModel.findOne({
-                        username: username
-                    })
-                    .then(data => {
-                        /* const passwordhash = bcrypt.hash(password, 10)
-                        const confirmpasswordhash = bcrypt.hash(confirmpassword, 10) */
-                        if (data) {
-                            res.render('signup', {
-                                error: 'Người dùng đã tồn tại'
-                            })
-                        } else {
-                            return AccountModel.create({
-                                username: username,
-                                password: encryptedPassword,
-                            })
-                        }
-                    })
-                    .then(data => {
-                        res.render('login')
-                    })
-                    .catch(err => {
-                        res.render('signup', {
-                            error: 'Tạo tài khoản thất bại'
-                        })
-                    })
-            })
-        })
-
-    }
-})
-
 
 // Server listen to the emitting messages from client to take on action
 io.on("connection", (socket) => {
@@ -147,19 +145,6 @@ io.on("connection", (socket) => {
         socket.on("New message", (newMessage) => {
             io.to(meetingRoomId).emit("Add new message", newMessage);
         });
-    });
-});
-
-// Entry endpoint
-// When enter into this endpoint it will also generate a unique room id and redirect you to that room
-app.get("/create", (req, res) => {
-    res.redirect(`/meetingroom/${v4UniqueId()}`);
-});
-
-// Meeting room endpoint
-app.get("/meetingroom/:id", (req, res) => {
-    res.render("meetingRoom", {
-        meetingRoomId: req.params.id,
     });
 });
 

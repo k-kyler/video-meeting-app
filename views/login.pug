@@ -10,11 +10,11 @@ block meetingroom
               b VIDEO CALL APP
             form(action='/login' method='POST')
               .form-group
-                label Email:
-                input#email.form-control(type='email' name='username' required)
+                label Username:
+                input.form-control(type='text' name='username' required)
               .form-group
                 label Password:
-                input#pass.form-control(type='password' name='password' required)
+                input.form-control(type='password' name='password' required)
               if error
                 h6(style="color: red") #{error}
               .form-group

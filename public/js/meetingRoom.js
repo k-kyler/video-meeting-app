@@ -53,7 +53,7 @@ const newUserEntried = (userId, stream) => {
 // are using by users such as a video track produced by camera
 navigator.mediaDevices
     .getUserMedia({
-        video: false,
+        video: true,
         audio: true,
     })
     .then((stream) => {
