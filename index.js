@@ -11,12 +11,11 @@ const peerServer = ExpressPeerServer(httpServer, {
     debug: true,
 });
 const bcrypt = require("bcrypt");
-const { check, validationResult } = require("express-validator");
 const path = require("path");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const AccountModel = require("./models/account");
-const { urlencoded } = require("body-parser");
+const SESSION_NAME = "webrtc";
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -26,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
     session({
+        name: SESSION_NAME,
         secret: "secretcat",
         resave: false,
         saveUninitialized: true,
@@ -33,16 +33,41 @@ app.use(
     })
 );
 
-// App endpoints
+// Check if user not login
+const checkLogin = (req, res, next) => {
+    if (!req.session.username) {
+        res.redirect("/login");
+    } else {
+        next();
+    }
+};
+
+// Prevent user from accessing routes that don't need after logged in
+const preventWhenLogged = (req, res, next) => {
+    if (req.session.username) {
+        res.redirect("/");
+    } else {
+        next();
+    }
+};
+
+// Index endpoint
 app.get("/", (req, res) => {
-    res.render("index");
+    if (req.session.username) {
+        res.render("index", {
+            username: req.session.username,
+        });
+    } else {
+        res.render("index");
+    }
 });
 
-app.get("/login", (req, res) => {
+// User log in endpoint
+app.get("/login", preventWhenLogged, (req, res) => {
     res.render("login");
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", preventWhenLogged, (req, res) => {
     AccountModel.findOne({
         username: req.body.username,
     })
@@ -52,7 +77,7 @@ app.post("/login", (req, res) => {
                 .then(function (result) {
                     if (result) {
                         req.session.username = req.body.username;
-                        res.redirect(`/meetingroom/${v4UniqueId()}`);
+                        res.redirect("/");
                     } else {
                         res.render("login", {
                             error: "Invalid email or password",
@@ -67,11 +92,12 @@ app.post("/login", (req, res) => {
         });
 });
 
-app.get("/signup", (req, res) => {
+// User sign up endpoint
+app.get("/signup", preventWhenLogged, (req, res) => {
     res.render("signup");
 });
 
-app.post("/signup", (req, res) => {
+app.post("/signup", preventWhenLogged, (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var confirmpassword = req.body.confirmpassword;
@@ -112,14 +138,25 @@ app.post("/signup", (req, res) => {
     }
 });
 
-// Entry endpoint
+// User logout endpoint
+app.get("/logout", checkLogin, (req, res) => {
+    req.session.destroy((error) => {
+        if (error) {
+            res.redirect("/");
+        } else {
+            res.clearCookie(SESSION_NAME);
+            res.redirect("/");
+        }
+    });
+});
+
 // When enter into this endpoint it will also generate a unique room id and redirect you to that room
-app.get("/create", (req, res) => {
+app.get("/create", checkLogin, (req, res) => {
     res.redirect(`/meetingroom/${v4UniqueId()}`);
 });
 
 // Meeting room endpoint
-app.get("/meetingroom/:id", (req, res) => {
+app.get("/meetingroom/:id", checkLogin, (req, res) => {
     if (req.session.username) {
         res.render("meetingRoom", {
             meetingRoomId: req.params.id,

@@ -1,6 +1,6 @@
 extends layout
 
-block meetingroom 
+block content
     div
       .first-eye
         .p-absolute(style='width: 100%; background-color: #00000024')
@@ -14,12 +14,20 @@ block meetingroom
               div
                 a.nav-link.p-0(style='color: white' href='/')
                   b Home
-            div
-              
-
-              // Login
-              a(href='/login')
-                button(class="btn btn-success m-3", type='submit') Login
+            div(class="d-flex align-items-center")
+              if username
+                // Display username              
+                p(class="m-3 text-light") Hello, #{username} 
+                // Meeting
+                a(href='/')
+                  button(class="btn btn-primary", type='submit') Go Meeting
+                // Logout
+                a(href='/logout')
+                  button(class="btn btn-outline-danger m-3", type='submit') Logout
+              else  
+                // Login
+                a(href='/login')
+                  button(class="btn btn-success m-3", type='submit') Login
       #signinMessage
       // Detail
       .detail.centroid
