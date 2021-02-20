@@ -1,0 +1,21 @@
+extends layout
+
+block meetingroom 
+    body.bodyOpt
+    .container.bg-opt
+      br
+      br
+      form(action='/create' method='POST')
+        .form-group
+          div
+            button.btn.btn-danger.btn-opt(type='submit') Create Room
+      hr(style='border: 10px solid black; border-radius: 5px;')
+      form(action='/join' method='POST')
+        .form-group
+          div
+            input#roomID.form-control.input-opt(type='text' name='roomID' placeholder='Enter Room ID...')
+            button.btn.btn-success.btn-opt(type='submit') Join Room
+
+
+
+
