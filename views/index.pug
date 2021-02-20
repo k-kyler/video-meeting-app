@@ -1,30 +1,33 @@
 extends layout
 
-block meetingroom 
+block content
     div
       .first-eye
         .p-absolute(style='width: 100%; background-color: #00000024')
         // Header
         .p-absolute.container-w.z-index-h.l-header
-          .l-logo
-            a.navbar-brand(href='#')
+          .l-logo.m-3
+            a.navbar-brand.mr-0(href='/')
               img#logo(style='width: 50px; height: 50px;' src='/img/pic1.png')
           .header-btn
             .d-flex.header-btn-nor
               div
-                a.nav-link(style='color: white' href='#')
+                a.nav-link.p-0(style='color: white' href='/')
                   b Home
-            div
-              // Login
-              a(href='/login')
-                button.btn(style='\
-                    background-color: #558F3B;\
-                    color: white;\
-                    border-color: green;\
-                    border-width: 3px;\
-                    margin: 0 10px 0 10px;\
-                  ' type='submit')
-                  | Login
+            div(class="d-flex align-items-center")
+              if username
+                // Display username              
+                p(class="m-3 text-light") Hello, #{username} 
+                // Meeting
+                a(href='/')
+                  button(class="btn btn-primary", type='submit') Go Meeting
+                // Logout
+                a(href='/logout')
+                  button(class="btn btn-outline-danger m-3", type='submit') Logout
+              else  
+                // Login
+                a(href='/login')
+                  button(class="btn btn-success m-3", type='submit') Login
       #signinMessage
       // Detail
       .detail.centroid
@@ -112,7 +115,7 @@ block meetingroom
         .row
           .col-lg-2.col-md-3.col-11
           .col-lg-10.col-md-9.col-11.infoCustomerComment
-            a.commentMore(href='#') More comments>>
+            a.commentMore(href='#') More comments...
         p.spaceRow
       // Footer
       #footer.centroid
