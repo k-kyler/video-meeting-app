@@ -1,5 +1,4 @@
 extends layout
-
 block meetingroom 
     .background.container
       .hh
@@ -12,10 +11,12 @@ block meetingroom
             form(action='/login' method='POST')
               .form-group
                 label Email:
-                input#email.form-control(type='email' name='email' required)
+                input#email.form-control(type='email' name='username' required)
               .form-group
                 label Password:
-                input#pass.form-control(type='password' name='pass' required)
+                input#pass.form-control(type='password' name='password' required)
+              if error
+                h6(style="color: red") #{error}
               .form-group
                 button.btn.btn-dark.loginBtn Login
                 h6 Have no account?

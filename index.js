@@ -10,9 +10,13 @@ const io = require("socket.io")(httpServer);
 const peerServer = ExpressPeerServer(httpServer, {
     debug: true,
 });
-var path = require('path');
-var bodyParser = require('body-parser');
-var AccountModel = require('./models/account')
+const bcrypt = require('bcrypt');
+const { check, validationResult } = require('express-validator')
+const path = require('path');
+const session = require('express-session')
+const bodyParser = require('body-parser');
+const AccountModel = require('./models/account');
+const { urlencoded } = require("body-parser");
 
 
 app.set("view engine", "pug");
@@ -23,71 +27,107 @@ app.use("/peerjs", peerServer);
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
+app.use(session({
+    secret: 'secretcat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
+}))
 
 
-app.get('/', (req, res, next) => {
-    res.render('index')
+app.get('/home', (req, res) => {
+    if (req.session.username) {
+        res.render('index')
+    } else {
+        res.redirect('/login')
+    }
 })
 
-app.get('/login', (req, res, next) => {
+app.get('/login', (req, res) => {
     res.render('login')
 })
 
-app.post('/login', (req, res, next) => {
-    var username = req.body.username
-    var password = req.body.password
-
+app.post('/login', (req, res) => {
     AccountModel.findOne({
-            username: username,
-            password: password
+            username: req.body.username,
         })
         .then(data => {
-            if (data) {
-                res.json('Dang nhap thanh cong')
-                res.render("mettingRoom")
-            } else {
-                res.status(400).json('Dang nhap that bai')
-            }
+            bcrypt.compare(req.body.password, data.password).then(function(result) {
+                if (result) {
+                    req.session.username = req.body.username
+                    res.redirect(`/meetingroom/${v4UniqueId()}`);
+                } else {
+                    res.render('login', {
+                        error: 'Dang nhap that bai'
+                    })
+                }
+            })
         })
         .catch(err => {
-            res.status(500).json('Loi server')
+            res.json({
+                error: 'Loi server'
+            })
         })
-        /* res.redirect(`/meetingroom/${v4UniqueId()}`); */
 })
 
 app.get("/meetingroom/:id", (req, res) => {
-    res.render("meetingRoom", {
-        meetingRoomId: req.params.id,
-    });
+    if (req.session.username) {
+        res.render("meetingRoom", {
+            meetingRoomId: req.params.id,
+        });
+    } else {
+        res.redirect('/login')
+    }
+
 });
 
 
-app.get('/signup', (req, res, next) => {
+app.get('/signup', (req, res) => {
     res.render('signup')
 })
-app.post('/signup', (req, res, next) => {
+app.post('/signup', (req, res) => {
     var username = req.body.username
     var password = req.body.password
+    var confirmpassword = req.body.confirmpassword
+    let encryptedPassword = ''
 
-    AccountModel.findOne({
-            username: username
+    if (confirmpassword != password) {
+        res.render('signup', {
+            error: 'Confirm password does not match'
         })
-        .then(data => {
-            if (data) {
-                res.json('User nay da ton tai')
-            } else {
-                return AccountModel.create({
-                    username: username,
-                    password: password
-                })
-            }
+    } else {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(password, salt, function(err, hash) {
+                encryptedPassword = hash
+                AccountModel.findOne({
+                        username: username
+                    })
+                    .then(data => {
+                        /* const passwordhash = bcrypt.hash(password, 10)
+                        const confirmpasswordhash = bcrypt.hash(confirmpassword, 10) */
+                        if (data) {
+                            res.render('signup', {
+                                error: 'Người dùng đã tồn tại'
+                            })
+                        } else {
+                            return AccountModel.create({
+                                username: username,
+                                password: encryptedPassword,
+                            })
+                        }
+                    })
+                    .then(data => {
+                        res.render('login')
+                    })
+                    .catch(err => {
+                        res.render('signup', {
+                            error: 'Tạo tài khoản thất bại'
+                        })
+                    })
+            })
         })
-        .then(data => {
-            res.json('Tao tai khoan thanh cong')
-        })
-        .catch(err => {
-            res.status(500).json('Tao tai khoan that bai')
-        })
+
+    }
 })
 
 
