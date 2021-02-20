@@ -47,44 +47,54 @@ io.on("connection", (socket) => {
 app.get("/", (req, res) => {
     res.render("index");
 });
-
-// FORMS
+// RENDER
 app.get("/signup", (req, res) => {
     res.render("signup");
 });
 app.get("/login", (req, res) => {
     res.render("login");
 });
+app.get("/options", (req, res) => {
+    res.render("roomOption");
+});
 
+// ----------------
+// HANDLE FUNCTIONS
+// ----------------
 
-// ---------
-// FUNCTIONS
-// ---------
+// SIGNUP & LOGIN
 app.post("/signup", (req, res) => {
     // ------------------
     // HANDLE SIGNUP HERE
     // ------------------
-
     // IF SIGNUP SUCCESS:
-    //    --> res.redirect(`/`);
     res.redirect(`/`);
-    // ------------------
-    // END HANDLE SIGNUP
-    // ------------------
 });
 app.post("/login", (req, res) => {
     // ------------------
     // HANDLE LOGIN HERE
     // ------------------
-
-    // CHECK USER FROM DATABASE: 
-    //    IF USER VALID:
-    //        --> res.redirect(`/meetingroom/${v4UniqueId()}`);
-    res.redirect(`/meetingroom/${v4UniqueId()}`);
-    // ------------------
-    // END HANDLE LOGIN
-    // ------------------
+    // IF LOGIN SUCCESS:
+    res.redirect(`/options`);
 });
+
+// CREATE & JOIN ROOM
+app.post("/create", (req, res) => {
+    // ------------------
+    // HANDLE CREATE HERE
+    // ------------------
+    res.redirect(`/meetingroom/${v4UniqueId()}`);
+});
+app.post("/join", (req, res) => {
+    // ------------------
+    // HANDLE JOIN HERE
+    // ------------------
+    // CHECK ROOM STATUS (EXISTS, FULL)
+    // IF OK:
+    // --> REDIRECT TO ROOM WITH EXACT "roomID"
+    res.send(`Join Room Success`);
+});
+
 // UNIQUE ROOM
 app.get("/meetingroom/:id", (req, res) => {
     res.render("meetingRoom", {
