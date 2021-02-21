@@ -10,4 +10,12 @@ Using:
 <br />• MongoDB
 <br />• PugEngine
 
-Producted by KKQ Software Team
+Run Step-by-Step:
+<br />1/ Clone project: >> git clone https://github.com/K-Kyler/video-meeting-app.git
+<br />2/ Import all modules: >> npm install ...
+<br />3/ Setup MongoDB:
+<br />4/ Run localhost: 
+<br /> >> cd video-meeting-app
+<br /> >> node index.js
+
+Producted by KKD Software Team
