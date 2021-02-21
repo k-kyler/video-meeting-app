@@ -17,14 +17,14 @@ git clone https://github.com/K-Kyler/video-meeting-app.git
 ```
 <br />2/ Import all modules:
 ```
+cd video-meeting-app
 npm install <name_module>
 ```
 <br />3/ Setup MongoDB:
 ```
 ```
-<br />4/ Run localhost:
+<br />4/ Host client:
 ```
-cd video-meeting-app
 node index.js
 ```
 
