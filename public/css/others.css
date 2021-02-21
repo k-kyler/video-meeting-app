@@ -211,12 +211,19 @@ div {
         display: flex;
         justify-content: center;
     }
+    .l-header {
+        flex-direction: column;
+    }
 }
 
 .bodyOpt {
     background-image: url("/img/bgOptions.jpg");
-    background-size: 100%;
-    opacity: 0.9;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
 }
 .btn-opt {
     font-size: 110%;
@@ -226,9 +233,10 @@ div {
     font-weight: bold;
 }
 .bg-opt {
+    opacity: 0.9;
     max-width: 1000px;
     background-color: #6b3e6d;
-    padding: 50px;
+    padding: 40px;
     border-radius: 25px;
     position: absolute;
     top: 50%;
