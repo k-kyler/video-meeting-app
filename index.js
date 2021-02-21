@@ -122,10 +122,11 @@ app.post("/signup", preventWhenLogged, (req, res) => {
                                 error: "User has already existed",
                             });
                         } else {
-                            return AccountModel.create({
+                            AccountModel.create({
                                 username: username,
                                 password: encryptedPassword,
                             });
+                            res.redirect("/login");
                         }
                     })
                     .catch((err) => {
@@ -156,7 +157,9 @@ app.get("/roomoption", checkLogin, (req, res) => {
 });
 
 // Join room by id endpoint
-app.post("/join", checkLogin, (req, res) => {});
+app.post("/join", checkLogin, (req, res) => {
+    res.redirect(`/meetingroom/${req.body.joinRoomId}`);
+});
 
 // Create room endpoint
 app.get("/create", checkLogin, (req, res) => {

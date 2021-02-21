@@ -64,3 +64,13 @@ video {
 #leaveButton {
     text-decoration: none;
 }
+
+@media (max-width: 600px) {
+    .meetingroom__controller {
+        flex-direction: column;
+    }
+
+    .meetingroom__buttons {
+        margin-top: 1rem;
+    }
+}
