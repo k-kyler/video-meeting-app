@@ -2,15 +2,15 @@
 @Authors:
 To Vinh Khang, Bui Quang Khai, Ha Hai Dang
 
-Using:
-<br />• NodeJS
-<br />• ExpressJS
-<br />• PeerJS
-<br />• SocketIO
-<br />• MongoDB
-<br />• PugEngine
+# Using:
+<br />• NodeJS 14.15.0
+<br />• ExpressJS 4.17.1
+<br />• PeerJS 0.6.1
+<br />• SocketIO 3.1.1
+<br />• MongoDB 4.4.0
+<br />• PugEngine 3.0.0
 
-Run Project Step-by-Step:
+# Run Project Step-by-Step:
 <br />1/ Clone project: 
 ```
 git clone https://github.com/K-Kyler/video-meeting-app.git
