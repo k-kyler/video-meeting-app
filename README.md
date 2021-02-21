@@ -5,6 +5,7 @@ To Vinh Khang, Bui Quang Khai, Ha Hai Dang
 Using:
 <br />• NodeJS
 <br />• ExpressJS
+<br />• PeerJS
 <br />• SocketIO
 <br />• MongoDB
 <br />• PugEngine
