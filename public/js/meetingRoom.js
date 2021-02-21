@@ -80,6 +80,7 @@ navigator.mediaDevices
 // ------------------------- Client message type in handler -------------------------
 
 let inputMessage = document.getElementById("inputMessage");
+let buttonInputMessage = document.getElementById("buttonInputMessage");
 
 // Get the input message when user type enter and emit to server
 inputMessage.addEventListener("keydown", (event) => {
@@ -89,11 +90,20 @@ inputMessage.addEventListener("keydown", (event) => {
     }
 });
 
+// Get the input message when user click button and emit to server
+buttonInputMessage.addEventListener("click", () => {
+    if (inputMessage.value !== "") {
+        socket.emit("New message", inputMessage.value);
+        inputMessage.value = "";
+    }
+});
+
 // Client listen to the emitting message from server to add new message on the web page
 socket.on("Add new message", (newMessage) => {
     let messageElement = document.createElement("li");
 
-    messageElement.innerHTML = newMessage;
+    messageElement.innerHTML =
+        `<b>${username}</b><br />` + newMessage + "<br /><br />";
     document.getElementById("chatMessages").append(messageElement);
     document.getElementById("chatBox").scrollTop = document.getElementById(
         "chatBox"
@@ -134,4 +144,19 @@ document.getElementById("videoButton").addEventListener("click", () => {
         document.getElementById("videoIcon").classList.remove("fa-video-slash");
         document.getElementById("videoIcon").classList.add("fa-video");
     }
+});
+
+// ----------------------------- Share room id handler -----------------------------
+
+document.getElementById("shareButton").addEventListener("click", () => {
+    let meetingRoomIdToShare = document.getElementById("meetingRoomIdToShare");
+
+    meetingRoomIdToShare.select();
+    meetingRoomIdToShare.setSelectionRange(0, 5000);
+    document.execCommand("copy");
+    document.getElementById("shareIcon").classList.remove("fa-copy");
+    document.getElementById("shareIcon").classList.add("fa-check-square");
+    document.getElementById("shareIcon").classList.remove("text-light");
+    document.getElementById("shareIcon").classList.add("text-success");
+    alert("You have just copied the room id");
 });

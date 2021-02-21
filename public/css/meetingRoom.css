@@ -23,6 +23,10 @@ video {
     padding: 0.7rem 1rem;
 }
 
+.meetingroom__buttons {
+    object-fit: cover;
+}
+
 .meetingroom__button {
     cursor: pointer;
 }
@@ -49,4 +53,13 @@ video {
 .meetingroom__chatMessages {
     padding-inline-start: 0;
     list-style-type: none;
+}
+
+#meetingRoomIdToShare {
+    position: absolute;
+    left: -99999rem;
+}
+
+#leaveButton {
+    text-decoration: none;
 }

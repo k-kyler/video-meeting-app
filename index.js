@@ -33,7 +33,7 @@ app.use(
     })
 );
 
-// Check if user not login
+// Custom middleware to check if user not login
 const checkLogin = (req, res, next) => {
     if (!req.session.username) {
         res.redirect("/login");
@@ -42,7 +42,7 @@ const checkLogin = (req, res, next) => {
     }
 };
 
-// Prevent user from accessing routes that don't need after logged in
+// Custom middleware to prevent user from accessing routes that don't need after logged in
 const preventWhenLogged = (req, res, next) => {
     if (req.session.username) {
         res.redirect("/");
@@ -150,20 +150,25 @@ app.get("/logout", checkLogin, (req, res) => {
     });
 });
 
-// When enter into this endpoint it will also generate a unique room id and redirect you to that room
+// Join by room id or create room endpoint
+app.get("/roomoption", checkLogin, (req, res) => {
+    res.render("roomOption");
+});
+
+// Join room by id endpoint
+app.post("/join", checkLogin, (req, res) => {});
+
+// Create room endpoint
 app.get("/create", checkLogin, (req, res) => {
     res.redirect(`/meetingroom/${v4UniqueId()}`);
 });
 
 // Meeting room endpoint
 app.get("/meetingroom/:id", checkLogin, (req, res) => {
-    if (req.session.username) {
-        res.render("meetingRoom", {
-            meetingRoomId: req.params.id,
-        });
-    } else {
-        res.redirect("/login");
-    }
+    res.render("meetingRoom", {
+        meetingRoomId: req.params.id,
+        username: req.session.username,
+    });
 });
 
 // Server listen to the emitting messages from client to take on action

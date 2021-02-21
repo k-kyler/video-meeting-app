@@ -1,11 +1,9 @@
 extends layout
 
-block meetingroom 
+block content
     body.bodyOpt
     .container.bg-opt
-      br
-      br
-      form(action='/create' method='POST')
+      form(action='/create' method='GET')
         .form-group
           div
             button.btn.btn-danger.btn-opt(type='submit') Create Room

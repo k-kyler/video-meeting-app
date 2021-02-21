@@ -230,7 +230,10 @@ div {
     background-color: #6b3e6d;
     padding: 50px;
     border-radius: 25px;
-    margin-top: 165px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .input-opt {
     font-size: 110%;
@@ -241,5 +244,3 @@ div {
     font-weight: bold;
     text-align: center;
 }
-
-
