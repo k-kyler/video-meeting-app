@@ -12,12 +12,20 @@ Using:
 
 Run Project Step-by-Step:
 <br />1/ Clone project: 
-<br /> >> git clone https://github.com/K-Kyler/video-meeting-app.git
-<br />2/ Import all modules: 
-<br /> >> npm install <name_module>
+```
+git clone https://github.com/K-Kyler/video-meeting-app.git
+```
+<br />2/ Import all modules:
+```
+npm install <name_module>
+```
 <br />3/ Setup MongoDB:
-<br />4/ Run localhost: 
-<br /> >> cd video-meeting-app
-<br /> >> node index.js
+```
+```
+<br />4/ Run localhost:
+```
+cd video-meeting-app
+node index.js
+```
 
 Producted by KKD Software Team
