@@ -40,8 +40,6 @@ selfVideo.muted = true; // Set mute to self video
 // ------------------- Other user -------------------
 
 const newUserEntried = (userId, stream) => {
-    console.log(`User ${userId} has entried the room`); // remove after finish project
-
     let peerCall = peer.call(userId, stream);
     let otherUserVideo = document.createElement("video");
 
