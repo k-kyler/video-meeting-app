@@ -64,6 +64,10 @@ video {
     text-decoration: none;
 }
 
+.meetingroom__timeline {
+    color: grey;
+}
+
 @media (max-width: 600px) {
     .meetingroom__controller {
         flex-direction: column;

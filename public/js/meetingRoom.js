@@ -6,7 +6,7 @@ const socket = io("/");
 // Setup peer for client
 let peer = new Peer(undefined, {
     host: "/",
-    port: "443",
+    port: "7000",
     path: "/peerjs",
 });
 
@@ -112,9 +112,15 @@ buttonInputMessage.addEventListener("click", () => {
 // Client listen to the emitting message from server to add new message on the web page
 socket.on("Add new message", (newMessage, username) => {
     let messageElement = document.createElement("li");
+    let timeline =
+        new Date().toLocaleDateString() +
+        ", " +
+        new Date().toLocaleTimeString();
 
     messageElement.innerHTML =
-        `<b>${username}</b><br />` + newMessage + "<br /><br />";
+        `<b>${username}</b> - <span class="meetingroom__timeline">${timeline}</span><br />` +
+        newMessage +
+        "<br /><br />";
     document.getElementById("chatMessages").append(messageElement);
     document.getElementById("chatBox").scrollTop = document.getElementById(
         "chatBox"
