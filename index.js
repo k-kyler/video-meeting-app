@@ -16,6 +16,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const AccountModel = require("./models/account");
 const SESSION_NAME = "webrtc";
+const mongoose = require("mongoose");
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -31,6 +32,15 @@ app.use(
         saveUninitialized: true,
         cookie: { maxAge: 1000 * 60 * 60 * 24 },
     })
+);
+
+mongoose.connect(
+    "mongodb+srv://webrtc-user_005:adminwebrtc123456@cluster0.kopin.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    }
 );
 
 // Custom middleware to check if user not login
@@ -187,8 +197,8 @@ io.on("connection", (socket) => {
 
         // Server listen to the emitting message when client input their message
         // and emit back a message to allow client rendering new message on the web page
-        socket.on("New message", (newMessage) => {
-            io.to(meetingRoomId).emit("Add new message", newMessage);
+        socket.on("New message", (newMessage, username) => {
+            io.to(meetingRoomId).emit("Add new message", newMessage, username);
         });
     });
 });

@@ -7,7 +7,7 @@ To Vinh Khang, Bui Quang Khai, Ha Hai Dang
 <br />• ExpressJS 4.17.1
 <br />• PeerJS 0.6.1
 <br />• SocketIO 3.1.1
-<br />• MongoDB 4.4.0
+<br />• MongoDB 4.4.4
 <br />• PugEngine 3.0.0
 
 # Run Project Step-by-Step:
@@ -15,17 +15,16 @@ To Vinh Khang, Bui Quang Khai, Ha Hai Dang
 ```
 git clone https://github.com/K-Kyler/video-meeting-app.git
 ```
-<br />2/ Import all modules:
+<br />2/ Import node_modules:
 ```
 cd video-meeting-app
-npm install <name_module>
+npm install
 ```
-<br />3/ Setup MongoDB:
-```
-```
+<br />3/ Setup database by MongoDB with name "webrtc"
+
 <br />4/ Host client:
 ```
-node index.js
+npm start
 ```
 
 Producted by KKD Software Team

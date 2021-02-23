@@ -5,9 +5,9 @@ const socket = io("/");
 
 // Setup peer for client
 let peer = new Peer(undefined, {
-    path: "/peerjs",
     host: "/",
     port: "7000",
+    path: "/peerjs",
 });
 
 peer.on("open", (userId) => {
@@ -19,15 +19,12 @@ peer.on("open", (userId) => {
 
 // Add streaming video function
 const addStreamingVideo = (video, stream) => {
-    let colElement = document.createElement("div");
-
-    colElement.className = "col-md-4 pt-3";
+    video.className = "col-md-4";
     video.srcObject = stream;
     video.addEventListener("loadedmetadata", () => {
         video.play();
     });
-    colElement.append(video);
-    document.getElementById("videoContainer").append(colElement);
+    document.getElementById("videoContainer").append(video);
 };
 
 // ------------------- Self user --------------------
@@ -40,8 +37,6 @@ selfVideo.muted = true; // Set mute to self video
 // ------------------- Other user -------------------
 
 const newUserEntried = (userId, stream) => {
-    console.log(`User ${userId} has entried the room`); // remove after finish project
-
     let peerCall = peer.call(userId, stream);
     let otherUserVideo = document.createElement("video");
 
@@ -79,17 +74,25 @@ navigator.mediaDevices
                 addStreamingVideo(video, userStream);
             });
         });
+    })
+    .catch((error) => {
+        console.error("Error: ", error);
     });
 
 // ------------------------- Client message type in handler -------------------------
 
 let inputMessage = document.getElementById("inputMessage");
 let buttonInputMessage = document.getElementById("buttonInputMessage");
+let meetingUsername = document.getElementById("meetingUsername");
 
 // Get the input message when user type enter and emit to server
 inputMessage.addEventListener("keydown", (event) => {
     if (inputMessage.value !== "" && event.keyCode === 13) {
-        socket.emit("New message", inputMessage.value);
+        socket.emit(
+            "New message",
+            inputMessage.value,
+            meetingUsername.innerHTML
+        );
         inputMessage.value = "";
     }
 });
@@ -97,17 +100,27 @@ inputMessage.addEventListener("keydown", (event) => {
 // Get the input message when user click button and emit to server
 buttonInputMessage.addEventListener("click", () => {
     if (inputMessage.value !== "") {
-        socket.emit("New message", inputMessage.value);
+        socket.emit(
+            "New message",
+            inputMessage.value,
+            meetingUsername.innerHTML
+        );
         inputMessage.value = "";
     }
 });
 
 // Client listen to the emitting message from server to add new message on the web page
-socket.on("Add new message", (newMessage) => {
+socket.on("Add new message", (newMessage, username) => {
     let messageElement = document.createElement("li");
+    let timeline =
+        new Date().toLocaleDateString() +
+        ", " +
+        new Date().toLocaleTimeString();
 
     messageElement.innerHTML =
-        `<b>${username}</b><br />` + newMessage + "<br /><br />";
+        `<b>${username}</b> - <span class="meetingroom__timeline">${timeline}</span><br />` +
+        newMessage +
+        "<br /><br />";
     document.getElementById("chatMessages").append(messageElement);
     document.getElementById("chatBox").scrollTop = document.getElementById(
         "chatBox"

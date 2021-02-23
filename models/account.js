@@ -1,12 +1,5 @@
 const mongoose = require("mongoose");
-
-mongoose.connect("mongodb://localhost:27017/webrtc", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
-
 const Schema = mongoose.Schema;
-
 const AccountSchema = new Schema(
     {
         username: String,
@@ -16,7 +9,6 @@ const AccountSchema = new Schema(
         collection: "user",
     }
 );
-
 const AccountModel = mongoose.model("user", AccountSchema);
 
 module.exports = AccountModel;

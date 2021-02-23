@@ -2,13 +2,13 @@ extends layout
 
 block content
     div(class="meetingroom container-fluid")
-        div(class="row")
+        div(class="row justify-content-center align-items-center")
             div(class="col-md-9 p-0")
                 div(class="meetingroom__video d-flex flex-column")
-                    div(class="meetingroom__videoContainer container")
-                        div(class="row justify-content-center", id="videoContainer")
+                    div(class="meetingroom__videoContainer container mt-3")
+                        div(class="row", id="videoContainer")
                     div(class="meetingroom__controller d-flex align-items-center justify-content-between")
-                        p(class="mb-0 text-light meetingroom__username") Username: #{username}
+                        p(class="mb-0 text-light meetingroom__username", id="meetingUsername") #{username}
                         div(class="meetingroom__buttons d-flex justify-content-center align-items-center")
                             div(id="audioButton", class="meetingroom__button mr-5 d-flex align-items-center flex-column") 
                                 i(class="my-1 text-light fas fa-volume-up", id="audioIcon")
@@ -20,7 +20,7 @@ block content
                                 i(class="my-1 text-light fas fa-copy", id="shareIcon")
                                 p(class="mb-0 text-light") Share
                             input(type="text", id="meetingRoomIdToShare", value=meetingRoomId)
-                            a(href="/roomoption", id="leaveButton", class="meetingroom__button d-flex align-items-center flex-column")
+                            a(href="/", id="leaveButton", class="meetingroom__button d-flex align-items-center flex-column")
                                 i(class="my-1 text-danger fas fa-power-off")
                                 p(class="mb-0 text-danger") Leave
                             
@@ -33,4 +33,3 @@ block content
                     button(class="btn btn-primary ml-1", id="buttonInputMessage")
                         i(class="fas fa-share")
     
-    script let username = "#{username}"
