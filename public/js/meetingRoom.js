@@ -27,7 +27,7 @@ const addStreamingVideo = (video, stream) => {
     });
     colElement.append(video);
 
-    if (colElement.contains(video)) {
+    if (stream) {
         colElement.className = "col-md-4";
     }
 
