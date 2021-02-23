@@ -21,7 +21,7 @@ peer.on("open", (userId) => {
 const addStreamingVideo = (video, stream) => {
     let colElement = document.createElement("div");
 
-    colElement.className = "col-md-4";
+    colElement.className = "";
     video.srcObject = stream;
     video.addEventListener("loadedmetadata", () => {
         video.play();
@@ -41,7 +41,7 @@ selfVideo.muted = true; // Set mute to self video
 
 const newUserEntried = (userId, stream) => {
     let peerCall = peer.call(userId, stream);
-    let otherUserVideo = document.getElementById("videoContainer");
+    let otherUserVideo = document.createElement("video");
 
     peerCall.on("stream", (otherUserStream) => {
         addStreamingVideo(otherUserVideo, otherUserStream);
