@@ -28,7 +28,7 @@ const addStreamingVideo = (video, stream) => {
     colElement.append(video);
 
     if (stream) {
-        colElement.className = "col-md-4";
+        video.className = "col-md-4";
     }
 
     document.getElementById("videoContainer").append(colElement);
