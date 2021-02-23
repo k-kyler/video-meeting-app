@@ -62,8 +62,6 @@ navigator.mediaDevices
         // Self user
         selfStream = stream;
         addStreamingVideo(selfVideo, stream);
-        addStreamingVideo(selfVideo, stream);
-        addStreamingVideo(selfVideo, stream);
 
         // Other user listen to the emitting message from server and also make a call
         socket.on("New user has connected", (userId) => {
