@@ -61,7 +61,7 @@ navigator.mediaDevices
     .then((stream) => {
         // Self user
         selfStream = stream;
-        addStreamingVideo(selfVideo, stream);
+        addStreamingVideo(selfVideo, selfStream);
 
         // Other user listen to the emitting message from server and also make a call
         socket.on("New user has connected", (userId) => {
@@ -77,6 +77,9 @@ navigator.mediaDevices
                 addStreamingVideo(video, userStream);
             });
         });
+    })
+    .catch((error) => {
+        console.error("Error: ", error);
     });
 
 // ------------------------- Client message type in handler -------------------------
