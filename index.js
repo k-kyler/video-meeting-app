@@ -16,7 +16,8 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const AccountModel = require("./models/account");
 const SESSION_NAME = "webrtc";
-const dbURI = process.env.MONGODB_URI;
+const dbURI =
+    "mongodb+srv://webrtc-user_005:adminwebrtc123456@cluster0.kopin.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
