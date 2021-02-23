@@ -21,15 +21,16 @@ peer.on("open", (userId) => {
 const addStreamingVideo = (video, stream) => {
     let colElement = document.createElement("div");
 
-    if (video) {
-        colElement.className = "col-md-4";
-    }
-
     video.srcObject = stream;
     video.addEventListener("loadedmetadata", () => {
         video.play();
     });
     colElement.append(video);
+
+    if (colElement.contains(video)) {
+        colElement.className = "col-md-4";
+    }
+
     document.getElementById("videoContainer").append(colElement);
 };
 
