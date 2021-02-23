@@ -4,8 +4,6 @@
 
 video {
     background-color: blue;
-    height: 12rem;
-    width: 18rem;
     width: 100%;
     object-fit: cover;
 }
@@ -73,8 +71,15 @@ video {
     .meetingroom__buttons {
         margin-top: 1rem;
     }
-
     .meetingroom__chat {
         height: 15rem;
+		bottom: 0;
+		position: absolute;
     }
+	.meetingroom__videoContainer,.meetingroom__chat{
+		height: auto;
+	}
+	.meetingroom__video{
+		height: auto;
+	}
 }
