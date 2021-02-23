@@ -35,7 +35,7 @@ const addStreamingVideo = (video, stream) => {
 let selfStream;
 let selfVideo = document.createElement("video");
 
-selfVideo.muted = false; // Set mute to self video
+selfVideo.muted = true; // Set mute to self video
 
 // ------------------- Other user -------------------
 
@@ -63,7 +63,7 @@ navigator.mediaDevices
     .then((stream) => {
         // Self user
         selfStream = stream;
-        addStreamingVideo(selfVideo, selfStream);
+        addStreamingVideo(selfVideo, stream);
 
         // Other user listen to the emitting message from server and also make a call
         socket.on("New user has connected", (userId) => {
