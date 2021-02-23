@@ -27,7 +27,7 @@ const addStreamingVideo = (video, stream) => {
         video.play();
     });
 
-    if (!video) {
+    if (video === null) {
         colElement.classList.remove("col-md-4");
     }
 
