@@ -64,18 +64,18 @@ navigator.mediaDevices
         addStreamingVideo(selfVideo, stream);
 
         // Other user listen to the emitting message from server and also make a call
-        // socket.on("New user has connected", (userId) => {
-        //     newUserEntried(userId, stream);
-        // });
+        socket.on("New user has connected", (userId) => {
+            newUserEntried(userId, stream);
+        });
 
         // All users will answer the call to see the other user's video in the room
         peer.on("call", (call) => {
             let video = document.createElement("video");
 
             call.answer(stream);
-            call.on("stream", (userStream) => {
-                addStreamingVideo(video, userStream);
-            });
+            // call.on("stream", (userStream) => {
+            //     addStreamingVideo(video, userStream);
+            // });
         });
     })
     .catch((error) => {
