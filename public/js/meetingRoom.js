@@ -41,9 +41,11 @@ selfVideo.muted = true; // Set mute to self video
 
 const newUserEntried = (userId, stream) => {
     let peerCall = peer.call(userId, stream);
-    let otherUserVideo = document.createElement("video");
+    let otherUserVideo = document.getElementById("videoContainer");
 
-    peerCall.on("stream");
+    peerCall.on("stream", (otherUserStream) => {
+        addStreamingVideo(otherUserVideo, otherUserStream);
+    });
 };
 
 // ----------- Self user and other user display streaming video and audio setup -----------
