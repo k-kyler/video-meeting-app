@@ -21,7 +21,7 @@ peer.on("open", (userId) => {
 const addStreamingVideo = (video, stream) => {
     let colElement = document.createElement("div");
 
-    colElement.className = "col-md-4 pt-3";
+    colElement.className = "col-md-4";
     video.srcObject = stream;
     video.addEventListener("loadedmetadata", () => {
         video.play();
@@ -61,6 +61,8 @@ navigator.mediaDevices
     .then((stream) => {
         // Self user
         selfStream = stream;
+        addStreamingVideo(selfVideo, stream);
+        addStreamingVideo(selfVideo, stream);
         addStreamingVideo(selfVideo, stream);
 
         // Other user listen to the emitting message from server and also make a call
