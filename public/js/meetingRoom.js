@@ -5,9 +5,9 @@ const socket = io("/");
 
 // Setup peer for client
 let peer = new Peer(undefined, {
-    path: "/peerjs",
     host: "/",
     port: "443",
+    path: "/peerjs",
 });
 
 peer.on("open", (userId) => {
@@ -19,16 +19,11 @@ peer.on("open", (userId) => {
 
 // Add streaming video function
 const addStreamingVideo = (video, stream) => {
-    // let colElement = document.createElement("div");
-
+    video.className = "col-md-4";
     video.srcObject = stream;
     video.addEventListener("loadedmetadata", () => {
         video.play();
     });
-    // colElement.append(video);
-
-    video.className = "col-md-4";
-
     document.getElementById("videoContainer").append(video);
 };
 
@@ -88,11 +83,16 @@ navigator.mediaDevices
 
 let inputMessage = document.getElementById("inputMessage");
 let buttonInputMessage = document.getElementById("buttonInputMessage");
+let meetingUsername = document.getElementById("meetingUsername");
 
 // Get the input message when user type enter and emit to server
 inputMessage.addEventListener("keydown", (event) => {
     if (inputMessage.value !== "" && event.keyCode === 13) {
-        socket.emit("New message", inputMessage.value);
+        socket.emit(
+            "New message",
+            inputMessage.value,
+            meetingUsername.innerHTML
+        );
         inputMessage.value = "";
     }
 });
@@ -100,13 +100,17 @@ inputMessage.addEventListener("keydown", (event) => {
 // Get the input message when user click button and emit to server
 buttonInputMessage.addEventListener("click", () => {
     if (inputMessage.value !== "") {
-        socket.emit("New message", inputMessage.value);
+        socket.emit(
+            "New message",
+            inputMessage.value,
+            meetingUsername.innerHTML
+        );
         inputMessage.value = "";
     }
 });
 
 // Client listen to the emitting message from server to add new message on the web page
-socket.on("Add new message", (newMessage) => {
+socket.on("Add new message", (newMessage, username) => {
     let messageElement = document.createElement("li");
 
     messageElement.innerHTML =

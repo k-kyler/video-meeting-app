@@ -197,8 +197,8 @@ io.on("connection", (socket) => {
 
         // Server listen to the emitting message when client input their message
         // and emit back a message to allow client rendering new message on the web page
-        socket.on("New message", (newMessage) => {
-            io.to(meetingRoomId).emit("Add new message", newMessage);
+        socket.on("New message", (newMessage, username) => {
+            io.to(meetingRoomId).emit("Add new message", newMessage, username);
         });
     });
 });
