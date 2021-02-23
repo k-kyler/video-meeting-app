@@ -69,14 +69,14 @@ navigator.mediaDevices
         });
 
         // All users will answer the call to see the other user's video in the room
-        peer.on("call", (call) => {
-            let video = document.createElement("video");
+        // peer.on("call", (call) => {
+        //     let video = document.createElement("video");
 
-            call.answer(stream);
-            call.on("stream", (userStream) => {
-                addStreamingVideo(video, userStream);
-            });
-        });
+        //     call.answer(stream);
+        //     call.on("stream", (userStream) => {
+        //         addStreamingVideo(video, userStream);
+        //     });
+        // });
     })
     .catch((error) => {
         console.error("Error: ", error);
