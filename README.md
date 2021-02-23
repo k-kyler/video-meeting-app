@@ -20,12 +20,11 @@ git clone https://github.com/K-Kyler/video-meeting-app.git
 cd video-meeting-app
 npm install
 ```
-<br />3/ Setup MongoDB:
-```
-```
+<br />3/ Setup database by MongoDB with name "webrtc"
+
 <br />4/ Host client:
 ```
-node index.js
+npm start
 ```
 
 Producted by KKD Software Team
