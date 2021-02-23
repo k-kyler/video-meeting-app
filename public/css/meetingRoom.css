@@ -4,6 +4,8 @@
 
 video {
     background-color: blue;
+	width: 15rem;
+	height: 12rem;
     width: 100%;
     object-fit: cover;
 }
