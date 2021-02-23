@@ -16,6 +16,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const AccountModel = require("./models/account");
 const SESSION_NAME = "webrtc";
+const dbURI = process.env.MONGODB_URI;
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -32,6 +33,12 @@ app.use(
         cookie: { maxAge: 1000 * 60 * 60 * 24 },
     })
 );
+
+mongoose.connect(dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+});
 
 // Custom middleware to check if user not login
 const checkLogin = (req, res, next) => {
