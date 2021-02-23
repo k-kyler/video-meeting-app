@@ -28,7 +28,7 @@ const addStreamingVideo = (video, stream) => {
     });
 
     if (!video) {
-        colElement.className = "";
+        colElement.classList.remove("col-md-4");
     }
 
     colElement.append(video);
