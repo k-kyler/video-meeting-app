@@ -21,7 +21,7 @@ peer.on("open", (userId) => {
 const addStreamingVideo = (video, stream) => {
     let colElement = document.createElement("div");
 
-    colElement.className = "col-md-4";
+    colElement.className = "";
     video.srcObject = stream;
     video.addEventListener("loadedmetadata", () => {
         video.play();

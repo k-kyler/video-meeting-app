@@ -3,9 +3,6 @@
 }
 
 video {
-    height: 12rem;
-    width: 18rem;
-    width: 100%;
     object-fit: cover;
 }
 
