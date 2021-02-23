@@ -43,9 +43,7 @@ const newUserEntried = (userId, stream) => {
     let peerCall = peer.call(userId, stream);
     let otherUserVideo = document.createElement("video");
 
-    peerCall.on("stream", (otherUserStream) => {
-        addStreamingVideo(otherUserVideo, otherUserStream);
-    });
+    peerCall.on("stream");
 };
 
 // ----------- Self user and other user display streaming video and audio setup -----------
@@ -73,9 +71,9 @@ navigator.mediaDevices
             let video = document.createElement("video");
 
             call.answer(stream);
-            // call.on("stream", (userStream) => {
-            //     addStreamingVideo(video, userStream);
-            // });
+            call.on("stream", (userStream) => {
+                addStreamingVideo(video, userStream);
+            });
         });
     })
     .catch((error) => {
