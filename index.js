@@ -16,8 +16,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const AccountModel = require("./models/account");
 const SESSION_NAME = "webrtc";
-const dbURI =
-    "mongodb+srv://webrtc-user_005:adminwebrtc123456@cluster0.kopin.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const mongoose = require("mongoose");
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -35,11 +34,14 @@ app.use(
     })
 );
 
-mongoose.connect(dbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-});
+mongoose.connect(
+    "mongodb+srv://webrtc-user_005:adminwebrtc123456@cluster0.kopin.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    }
+);
 
 // Custom middleware to check if user not login
 const checkLogin = (req, res, next) => {
