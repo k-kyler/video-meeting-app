@@ -19,7 +19,7 @@ peer.on("open", (userId) => {
 
 // Add streaming video function
 const addStreamingVideo = (video, stream) => {
-    video.className = "col-6 col-md-4";
+    video.className = "col-6 mb-2 col-md-4 mb-md-0";
     video.srcObject = stream;
     video.addEventListener("loadedmetadata", () => {
         video.play();
