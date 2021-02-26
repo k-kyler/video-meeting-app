@@ -122,9 +122,10 @@ block content
         .container-w
           .row
             // Map Picture
-            img.flex.map(src='/img/map.png' width='400' heigh='400')
+            .col-md-4.col-sm-6.col-12
+              img.flex.map(src='/img/map.png')
             // Info Footer
-            .infoFooter
+            .infoFooter.col-md-8.col-sm-6.col-12
               h Software Development Team - KKD VideoCallApp
               br
               h 19 Nguyen Huu Tho, Tan Phong, District 7, HCM City
@@ -143,6 +144,6 @@ block content
             p
               img(src='https://kichi.ggg.com.vn/wp-content/uploads/2018/10/bct.png')
 
-            p Producted by KKD Software Team.
+            p.pdfooter Producted by KKD Software Team.
 
          
