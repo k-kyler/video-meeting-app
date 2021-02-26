@@ -22,7 +22,7 @@ npm install
 ```
 <br />3/ Setup database by MongoDB with name "webrtc"
 
-<br />4/ Host client:
+<br />4/ Run:
 ```
 npm start
 ```
