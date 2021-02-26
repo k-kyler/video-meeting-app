@@ -3,8 +3,8 @@
 }
 
 video {
-	width: 15rem;
-	height: 12rem;
+    width: 15rem;
+    height: 12rem;
     width: 100%;
     object-fit: cover;
 }
@@ -69,22 +69,10 @@ video {
 }
 
 @media (max-width: 600px) {
+    .meetingroom__chat {
+        height: 20rem;
+    }
     .meetingroom__controller {
         flex-direction: column;
     }
-
-    .meetingroom__buttons {
-        margin-top: 1rem;
-    }
-    .meetingroom__chat {
-        height: 15rem;
-		bottom: 0;
-		position: absolute;
-    }
-	.meetingroom__videoContainer,.meetingroom__chat{
-		height: auto;
-	}
-	.meetingroom__video{
-		height: auto;
-	}
 }
