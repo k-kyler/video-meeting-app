@@ -1,4 +1,5 @@
 // Import libraries and app setup
+require("dotenv").config();
 const express = require("express");
 const { v4: v4UniqueId } = require("uuid");
 const http = require("http");
@@ -15,7 +16,7 @@ const path = require("path");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const AccountModel = require("./models/account");
-const SESSION_NAME = "webrtc";
+const SESSION_NAME = process.env.SESSION_NAME;
 const mongoose = require("mongoose");
 
 app.set("view engine", "pug");
@@ -27,21 +28,18 @@ app.use(bodyParser.json());
 app.use(
     session({
         name: SESSION_NAME,
-        secret: "secretcat",
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: 1000 * 60 * 60 * 24 },
+        cookie: { maxAge: 60 * 60 * 24 },
     })
 );
 
-mongoose.connect(
-    "mongodb+srv://webrtc-user_005:adminwebrtc123456@cluster0.kopin.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-    }
-);
+mongoose.connect(process.env.MONGODBLOCAL_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+});
 
 // Custom middleware to check if user not login
 const checkLogin = (req, res, next) => {
