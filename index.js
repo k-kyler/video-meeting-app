@@ -35,7 +35,15 @@ app.use(
     })
 );
 
-mongoose.connect(process.env.MONGODBONLINE_URL, {
+// MongoDB setup for production
+// mongoose.connect(process.env.MONGODBONLINE_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: true,
+// });
+
+// MongoDB setup for development
+mongoose.connect(process.env.MONGODBLOCAL_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
