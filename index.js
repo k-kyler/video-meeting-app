@@ -31,23 +31,23 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: 60 * 60 * 24 },
+        cookie: { maxAge: 1000 * 60 * 60 * 24 },
     })
 );
 
 // MongoDB setup for production
-// mongoose.connect(process.env.MONGODBONLINE_URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     useCreateIndex: true,
-// });
-
-// MongoDB setup for development
-mongoose.connect(process.env.MONGODBLOCAL_URL, {
+mongoose.connect(process.env.MONGODBONLINE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
 });
+
+// MongoDB setup for development
+// mongoose.connect(process.env.MONGODBLOCAL_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useCreateIndex: true,
+// });
 
 // Custom middleware to check if user not login
 const checkLogin = (req, res, next) => {
