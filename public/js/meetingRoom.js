@@ -8,10 +8,10 @@ let peer = new Peer(undefined, {
     host: "/",
 
     // For development
-    // port: "7000",
+    port: "7000",
 
     // For production
-    port: "443",
+    // port: "443",
 
     path: "/peerjs",
 });
