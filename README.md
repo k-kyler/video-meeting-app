@@ -22,7 +22,9 @@ npm install
 ```
 <br />3/ Setup database by MongoDB with name "webrtc"
 
-<br />4/ Run:
+<br />4/ Setup enviroment ".env" with the corresponding parameters in the project
+
+<br />5/ Run:
 ```
 npm start
 ```
