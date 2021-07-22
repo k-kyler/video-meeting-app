@@ -1,6 +1,6 @@
 # Video Meeting App - WebRTC
 @Authors:
-To Vinh Khang, Bui Quang Khai, Ha Hai Dang
+To Vinh Khang, Bui Quang Khai, Ha Nguyen Hai Dang
 
 # Using:
 <br />• NodeJS 14.15.0
