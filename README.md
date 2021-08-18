@@ -2,6 +2,11 @@
 @Authors:
 To Vinh Khang, Bui Quang Khai, Ha Nguyen Hai Dang
 
+@Docs:
+```
+https://github.com/ToVinhKhang/All-Reports/blob/main/BSA_WEB/BSA_VideoCallMeeting.pdf
+```
+
 # Using:
 <br />• NodeJS 14.15.0
 <br />• ExpressJS 4.17.1
