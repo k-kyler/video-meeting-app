@@ -1,4 +1,4 @@
-# Video Meeting App - WebRTC
+# Video Meeting App
 @Authors:
 To Vinh Khang, Bui Quang Khai, Ha Nguyen Hai Dang
 
