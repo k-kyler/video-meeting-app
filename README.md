@@ -1,13 +1,11 @@
 # Video Meeting App
-@Authors:
-To Vinh Khang, Bui Quang Khai, Ha Nguyen Hai Dang
 
-@Docs:
-```
-https://github.com/ToVinhKhang/All-Reports/blob/main/BSA_WEB/BSA_VideoCallMeeting.pdf
-```
+Authors: To Vinh Khang, Bui Quang Khai, Ha Nguyen Hai Dang
 
-# Using:
+[Docs](https://github.com/ToVinhKhang/All-Reports/blob/main/BSA_WEB/BSA_VideoCallMeeting.pdf)
+
+# Libraries
+
 <br />• NodeJS 14.15.0
 <br />• ExpressJS 4.17.1
 <br />• PeerJS 0.6.1
@@ -15,7 +13,8 @@ https://github.com/ToVinhKhang/All-Reports/blob/main/BSA_WEB/BSA_VideoCallMeetin
 <br />• MongoDB 4.4.4
 <br />• PugEngine 3.0.0
 
-# Run Project Step-by-Step:
+# Run Project
+
 <br />1/ Clone project: 
 ```
 git clone https://github.com/K-Kyler/video-meeting-app.git
@@ -36,7 +35,8 @@ npm start
 
 <br />
 
-# Link host Heroku with MongoDbAtlas:
+# Live Product
+
 ```
 https://stark-lowlands-76556.herokuapp.com/
 ```
